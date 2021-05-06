@@ -1,9 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../hooks";
-import React, { useEffect, useState } from "react";
-import { Redirect, useHistory } from "react-router";
+import { useEffect, useState } from "react";
 import Messages from "./Messages";
 import * as types from "../actions/types";
-import { showMessages } from "../actions/messages";
 import fb from "../firebase";
 const db = fb.database();
 const Dashboard = () => {
@@ -41,11 +39,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
+      dispatch({ type: types.CLEAR_CHATS });
       db.ref("chats/").on("child_added", (event) => {
         dispatch({ type: types.CHAT_ADDED, payload: event.val() });
       });
       return function cleanUp() {};
     }
+    // eslint-disable-next-line
   }, [loading]);
   return (
     <div>

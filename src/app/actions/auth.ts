@@ -1,15 +1,9 @@
-import axios from "axios";
 import { Action, AnyAction, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { clearMessages, showMessages } from "./messages";
+import { showMessages } from "./messages";
 import * as types from "./types";
 import fb from "../firebase";
 const auth = fb.auth();
-const jsonConfig = {
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
 
 export const loadUser = (): ThunkAction<
   void,

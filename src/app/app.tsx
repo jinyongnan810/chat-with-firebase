@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Route, Router, Switch, useHistory } from "react-router";
+import { useEffect } from "react";
+import { Router, Switch } from "react-router";
 import { Provider } from "react-redux";
 import store from "./store";
 import { createHashHistory } from "history";
@@ -11,7 +11,6 @@ import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import "./sass/index.scss";
 import "../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
-import { loadUser } from "./actions/auth";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import { PublicRoute } from "./routes/PublicRoute";
 import fb from "./firebase";

@@ -9,6 +9,7 @@ const Messages = () => {
         dispatch({ type: types.CLEAR_MESSAGES });
       }
     };
+    // eslint-disable-next-line
   }, []);
   const { level, messages, maintain } = useAppSelector(
     (state) => state.messages

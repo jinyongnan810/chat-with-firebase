@@ -1,13 +1,11 @@
-import React, { useState } from "react";
-import { Redirect, useHistory } from "react-router";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useState } from "react";
+import { useAppDispatch } from "../../hooks";
 import { signup } from "../../actions/auth";
 import Messages from "../Messages";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
   const dispatch = useAppDispatch();
   const onSubmit = async (e: any) => {
     e.preventDefault();

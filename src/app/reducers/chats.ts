@@ -1,4 +1,4 @@
-import { AnyAction, Reducer } from "redux";
+import { Reducer } from "redux";
 import * as types from "../actions/types";
 interface ChatInfo {
   email: string;
@@ -9,7 +9,7 @@ interface ChatsInfo {
 }
 interface ChatsBaseAction {
   type: string;
-  payload: ChatInfo;
+  payload: ChatInfo | null;
 }
 const initialState: ChatsInfo = {
   chats: [],
@@ -22,7 +22,11 @@ const chatsReducer: Reducer<ChatsInfo, ChatsBaseAction> = (
   switch (type) {
     case types.CHAT_ADDED:
       return {
-        chats: [...state.chats, payload],
+        chats: [...state.chats, payload as ChatInfo],
+      };
+    case types.CLEAR_CHATS:
+      return {
+        chats: [],
       };
     default:
       return state;

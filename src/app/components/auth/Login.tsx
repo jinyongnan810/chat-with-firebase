@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Redirect, useHistory } from "react-router";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useState } from "react";
+import { useAppDispatch } from "../../hooks";
 import { login } from "../../actions/auth";
 import Messages from "../Messages";
 import * as types from "../../actions/types";
@@ -10,7 +9,6 @@ import { showMessages } from "../../../app/actions/messages";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
   const dispatch = useAppDispatch();
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -22,23 +20,12 @@ const Login = () => {
     fb.auth()
       .signInWithPopup(provider)
       .then((result) => {
-        const credential = result.credential!;
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const token = (credential as any).accessToken;
-        // The signed-in user info.
         const user = result.user;
         console.log(user);
         dispatch({ type: types.LOGIN_SUCCESS, payload: user });
       })
       .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        const credential = error.credential;
-        // ...
         console.error(errorMessage);
         dispatch(showMessages("warning", [{ message: errorMessage }]));
       });

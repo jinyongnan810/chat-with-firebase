@@ -1,4 +1,4 @@
-import { AnyAction, Reducer } from "redux";
+import { Reducer } from "redux";
 import * as types from "../actions/types";
 interface MessagesInfo {
   level: "info" | "warning" | "error";

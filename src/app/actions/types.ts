@@ -11,3 +11,4 @@ export const SHOW_MESSAGES = "SHOW_MESSAGES";
 export const CLEAR_MESSAGES = "CLEAR_MESSAGES";
 // chats
 export const CHAT_ADDED = "CHAT_ADDED";
+export const CLEAR_CHATS = "CLEAR_CHATS";
