@@ -16,7 +16,7 @@ import { PrivateRoute } from "./routes/PrivateRoute";
 import { PublicRoute } from "./routes/PublicRoute";
 import fb from "./firebase";
 import { USER_LOADED, AUTH_EXPIRED } from "../app/actions/types";
-const app = () => {
+const App = () => {
   axios.defaults.baseURL = process.env.SERVER_URL;
   axios.defaults.withCredentials = true;
   const history = createHashHistory();
@@ -46,4 +46,4 @@ const app = () => {
   );
 };
 
-export default app;
+export default App;

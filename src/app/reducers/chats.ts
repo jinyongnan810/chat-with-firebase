@@ -29,4 +29,3 @@ const chatsReducer: Reducer<ChatsInfo, ChatsBaseAction> = (
   }
 };
 export default chatsReducer;
-export { ChatsInfo };

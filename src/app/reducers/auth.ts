@@ -50,4 +50,3 @@ const authReducer: Reducer<AuthBaseState, AuthBaseAction> = (
   }
 };
 export default authReducer;
-export { AuthBaseState };

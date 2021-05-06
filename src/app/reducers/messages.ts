@@ -36,4 +36,3 @@ const messagesReducer: Reducer<MessagesInfo, MessagesBaseAction> = (
   }
 };
 export default messagesReducer;
-export { MessagesInfo };
