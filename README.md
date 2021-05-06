@@ -2,10 +2,6 @@
 
 - typescript
 - react-redux
+- react-scripts(instead of webpack5)
 - firebase auth
 - firebase realtime database
-
-#### TODOS
-
-- firebase auth: google login throws error.
-- firebase realtime database: not reflect to server?
