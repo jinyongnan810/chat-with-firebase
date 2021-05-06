@@ -43,7 +43,9 @@ const Dashboard = () => {
       db.ref("chats/").on("child_added", (event) => {
         dispatch({ type: types.CHAT_ADDED, payload: event.val() });
       });
-      return function cleanUp() {};
+      return function cleanUp() {
+        db.ref("chats/").off("child_added");
+      };
     }
     // eslint-disable-next-line
   }, [loading]);
