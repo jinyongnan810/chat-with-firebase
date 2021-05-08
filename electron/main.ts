@@ -19,17 +19,19 @@ const createMainWindow = (): void => {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
+      nativeWindowOpen: true,
     },
   });
   mainWindow.loadURL(
     // isDev
     //   ? "http://localhost:4000"
     //   :
-    url.format({
-      pathname: path.join(__dirname, "index.html"),
-      protocol: "file:",
-      slashes: true,
-    })
+    // url.format({
+    //   pathname: path.join(__dirname, "index.html"),
+    //   protocol: "file:",
+    //   slashes: true,
+    // })
+    "https://realtime-demo-306d8.firebaseapp.com/"
   );
   if (isDev) {
     //install devtools
