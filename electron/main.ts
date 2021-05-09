@@ -4,10 +4,6 @@ import installExtension, {
   REDUX_DEVTOOLS,
 } from "electron-devtools-installer";
 import isDev from "electron-is-dev";
-import { ipcMain } from "electron";
-import axios from "axios";
-import * as url from "url";
-import path from "path";
 
 const isMac = process.platform === "darwin" ? true : false;
 let mainWindow: BrowserWindow | null;
