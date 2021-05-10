@@ -9,7 +9,6 @@
 #### Problems
 
 - tsconfig.json: `"noEmit": true` is needed by react-scripts but cause problem in electron
-- electron assets not being moved to build folder when built
 
 #### build
 
