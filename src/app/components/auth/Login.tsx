@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch } from "../../hooks";
-import { login } from "../../actions/auth";
+import { login, registerToFirestore } from "../../actions/auth";
 import Messages from "../Messages";
 import * as types from "../../actions/types";
 import firebase from "firebase/app";
@@ -22,6 +22,7 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+        dispatch(registerToFirestore(result));
         dispatch({ type: types.LOGIN_SUCCESS, payload: user });
       })
       .catch((error) => {
