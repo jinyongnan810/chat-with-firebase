@@ -3,6 +3,7 @@ import * as types from "../actions/types";
 interface ChatInfo {
   email: string;
   msg: string;
+  date: string;
 }
 interface ChatsInfo {
   chats: ChatInfo[];

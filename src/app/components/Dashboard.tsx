@@ -13,18 +13,21 @@ const Dashboard = () => {
   const [chatMsg, setChatMsg] = useState("");
   const onAddChat = async (e: any) => {
     e.preventDefault();
-    const ref = db.ref(`chats/${Date.now()}`);
+    const ref = db.ref(`chats`).push();
     console.log(ref);
     // const newItem = ref.push({ email: user!.email, msg: chatMsg });
     try {
       ref
-        .set({ email: user!.email, msg: chatMsg }, (error) => {
-          if (error) {
-            console.error(error);
-          } else {
-            console.log("no error saving data.");
+        .set(
+          { email: user!.email, msg: chatMsg, date: Date.now() },
+          (error) => {
+            if (error) {
+              console.error(error);
+            } else {
+              console.log("no error saving data.");
+            }
           }
-        })
+        )
         .then(
           (success) => console.log("success"),
           (error) => console.error("error:", JSON.stringify(error))
@@ -79,6 +82,8 @@ const Dashboard = () => {
       <div>
         {chats.map((c) => (
           <p key={Math.floor(Math.random() * 1000000)}>
+            {new Date(c.date).toString()}
+            &nbsp;&nbsp;
             <b>{c.email}</b>: {c.msg}
           </p>
         ))}
