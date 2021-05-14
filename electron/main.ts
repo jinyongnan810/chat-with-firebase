@@ -1,20 +1,18 @@
-import { app, BrowserWindow, Menu, Notification } from "electron";
+import { app, BrowserWindow, Menu, Notification, Tray } from "electron";
 import installExtension, {
   REACT_DEVELOPER_TOOLS,
   REDUX_DEVTOOLS,
 } from "electron-devtools-installer";
 import isDev from "electron-is-dev";
-import { ipcMain } from "electron";
-import axios from "axios";
-import * as url from "url";
 import path from "path";
-
 const isMac = process.platform === "darwin" ? true : false;
 let mainWindow: BrowserWindow | null;
+let tray: Tray | null;
 const createMainWindow = (): void => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -49,7 +47,35 @@ const createMainWindow = (): void => {
     title: "Welcome",
     body: "App started.",
   }).show();
+  mainWindow.on("close", (e) => {
+    if (!(app as any).isQuitting) {
+      e.preventDefault();
+      mainWindow!.hide();
+    }
+
+    return true;
+  });
   mainWindow.on("closed", () => (mainWindow = null));
+  // tray
+  const icon = path.join(__dirname, "assets", "icons", "tray_icon.png");
+  tray = new Tray(icon);
+  const trayContextMenu = Menu.buildFromTemplate([
+    {
+      label: "Quit",
+      click: () => {
+        (app as any).isQuitting = true;
+        app.quit();
+      },
+    },
+  ]);
+  tray.on("click", (e) => {
+    if (mainWindow!.isVisible()) {
+      mainWindow!.hide();
+    } else {
+      mainWindow!.show();
+    }
+  });
+  tray.setContextMenu(trayContextMenu);
 };
 const menu = [
   ...(isMac ? [{ role: "appMenu" }] : []),
