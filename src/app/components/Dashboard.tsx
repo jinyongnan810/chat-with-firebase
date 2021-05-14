@@ -4,6 +4,7 @@ import Messages from "./Messages";
 import * as types from "../actions/types";
 import fb from "../firebase";
 const db = fb.database();
+const fstore = fb.firestore();
 const Dashboard = () => {
   const { isAuthenticated, loading, user } = useAppSelector(
     (state) => state.auth
@@ -14,24 +15,36 @@ const Dashboard = () => {
   const onAddChat = async (e: any) => {
     e.preventDefault();
     const ref = db.ref(`chats`).push();
-    console.log(ref);
-    // const newItem = ref.push({ email: user!.email, msg: chatMsg });
+
     try {
-      ref
-        .set(
-          { email: user!.email, msg: chatMsg, date: Date.now() },
-          (error) => {
-            if (error) {
-              console.error(error);
-            } else {
-              console.log("no error saving data.");
-            }
+      await ref.set(
+        { email: user!.email, msg: chatMsg, date: Date.now() },
+        (error) => {
+          if (error) {
+            console.error(error);
+          } else {
+            console.log("no error saving data.");
           }
-        )
-        .then(
-          (success) => console.log("success"),
-          (error) => console.error("error:", JSON.stringify(error))
-        );
+        }
+      );
+      // also save to firestore
+      const key = (await ref).key;
+      const storeRef = fstore.doc(`chat/${key}`);
+      const data = {
+        msg: chatMsg,
+        date: Date.now(),
+        user: fstore.doc(`user/${fb.auth().currentUser!.uid}`),
+      };
+      await storeRef.set(data);
+      // try get chat and user data from firestore
+      const getChatDoc = await fstore.collection("chat").doc(key!).get();
+      const chatData = getChatDoc.data();
+      console.log(`Get chat from firestore:${JSON.stringify(chatData)}`);
+      // get user data from ref
+      const userFromChatDoc = await chatData!.user.get();
+      console.log(
+        `Get User from Chat:${JSON.stringify(userFromChatDoc.data())}`
+      );
     } catch (error) {
       console.error(error);
     }
