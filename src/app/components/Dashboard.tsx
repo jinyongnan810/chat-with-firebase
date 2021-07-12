@@ -59,6 +59,12 @@ const Dashboard = () => {
       db.ref("chats/").on("child_added", (event) => {
         dispatch({ type: types.CHAT_ADDED, payload: event.val() });
       });
+      // memo1: when disconnects like switching wifi, this works
+      // memo2: when wifi is really off, this value cannot be detected.
+      db.ref(".info/connected").on("value", (snapshot) => {
+        const online = snapshot.val();
+        console.log(`Online:${online}`);
+      });
       return function cleanUp() {
         db.ref("chats/").off("child_added");
       };
